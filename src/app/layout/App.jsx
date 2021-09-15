@@ -1,11 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
+import { Container } from "semantic-ui-react";
+import EventDashboard from "../../features/events/eventDashboard/EventDashboard";
+import NavBar from "../../features/nav/Navbar";
 
-function App() {
+export default function App() {
+  const [formOpen, setFormOpen] = useState(false);
+
   return (
-    <div className="App">
-      <h1>Welcome to NewsRoom Admin</h1>
-    </div>
+    <>
+      <NavBar setFormOpen={setFormOpen} />
+      <Container className= 'main' >
+      <EventDashboard formOpen={formOpen} setFormOpen={setFormOpen}/>
+      </Container>
+    </>
   );
 }
-
-export default App;
