@@ -17,7 +17,7 @@ export default function EventDetailedPage({match}){
                 <EventDetailedChat event={event}/>
             </Grid.Column>
             <Grid.Column width={6} >
-                <EventDetailedSideBar attendees={event.attendees}/>
+                <EventDetailedSideBar attendees = {event.attendees} />
             </Grid.Column>
         </Grid>
     )

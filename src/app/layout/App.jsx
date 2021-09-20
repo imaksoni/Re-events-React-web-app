@@ -7,24 +7,34 @@ import EventForm from "../../features/events/eventForm/EventForm";
 import HomagePage from "../../features/home/HomePage";
 import NavBar from "../../features/nav/Navbar";
 import Sandbox from "../../features/sandox/Sandbox";
+import ModalManager from "../common/modals/ModalManger";
 
 export default function App() {
-  const {key} =useLocation();
-  
+  const { key } = useLocation();
+
   return (
     <>
-      <Route exact path= '/' component={HomagePage} />
-      <Route path= {'/(.+)'} render= {() => (
-        <>
-        <NavBar />
-        <Container className= 'main' >
-        <Route exact path= '/events' component={EventDashboard} />
-        <Route exact path= '/sandbox' component={Sandbox} />
-        <Route exact path= '/events/:id' component={EventDetailedPage} />
-        <Route exact path= {['/createEvent' , '/manage/:id' ]} component={EventForm} key={key} />
-        </Container>
-        </>
-      )} />
+      <ModalManager />
+      <Route exact path="/" component={HomagePage} />
+      <Route
+        path={"/(.+)"}
+        render={() => (
+          <>
+            <NavBar />
+            <Container className="main">
+              <Route exact path="/events" component={EventDashboard} />
+              <Route exact path="/sandbox" component={Sandbox} />
+              <Route exact path="/events/:id" component={EventDetailedPage} />
+              <Route
+                exact
+                path={["/createEvent", "/manage/:id"]}
+                component={EventForm}
+                key={key}
+              />
+            </Container>
+          </>
+        )}
+      />
     </>
   );
 }
