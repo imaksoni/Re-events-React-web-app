@@ -41,7 +41,7 @@ const [mapView,setMapView] = useState(false);
             </Grid.Column>
         </Grid>
     </Segment>
-    {mapView && <EventDetailedMap location={event.venue.latlng}/>}
+    {mapView && <EventDetailedMap location={event.venue.latLng}/>}
 </Segment.Group>
     )
 }

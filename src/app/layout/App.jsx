@@ -8,6 +8,7 @@ import EventForm from "../../features/events/eventForm/EventForm";
 import HomagePage from "../../features/home/HomePage";
 import NavBar from "../../features/nav/Navbar";
 import Sandbox from "../../features/sandox/Sandbox";
+import ErrorComponent from "../common/errors/ErrorComponent";
 import ModalManager from "../common/modals/ModalManger";
 
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
                 component={EventForm}
                 key={key}
               />
+              <Route path='/error' component={ErrorComponent} />
             </Container>
           </>
         )}
