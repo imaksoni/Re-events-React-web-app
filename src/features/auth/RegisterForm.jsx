@@ -1,39 +1,40 @@
 import React from "react";
 import ModalWrapper from "../../app/common/modals/ModalWrapper";
-import { Formik,Form } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Button, Divider, Label } from "semantic-ui-react";
 import MyTextInput from "../../app/common/form/MyTextInput";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../app/common/modals/modalReducer";
-import { signInWithEmail } from "../../app/firestore/firebaseService";
+import { registerInFirebase } from "../../app/firestore/firebaseService";
 import SocialLogin from "./SocialLogin";
 
-export default function LoginForm() {
-
-    const dispatch=useDispatch();
+export default function RegisterForm() {
+  const dispatch = useDispatch();
 
   return (
-    <ModalWrapper size="mini" header="Sign in to Re-vents">
+    <ModalWrapper size="mini" header="Register to Re-vents">
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ displayName: "", email: "", password: "" }}
         validationSchema={Yup.object({
+          displayName: Yup.string().required(),
           email: Yup.string().required().email(),
-          password: Yup.string().required()
+          password: Yup.string().required(),
         })}
-        onSubmit={async (values, {setSubmitting, setErrors}) => {
-          try{
-           await signInWithEmail(values);
-          setSubmitting(false);
-          dispatch(closeModal());
-          }catch(error){
-            setErrors({auth: 'Problem with username or password'});
+        onSubmit={async (values, { setSubmitting, setErrors }) => {
+          try {
+            await registerInFirebase(values);
+            setSubmitting(false);
+            dispatch(closeModal());
+          } catch (error) {
+              setErrors({auth: error.message});
             setSubmitting(false);
           }
         }}
       >
         {({ isSubmitting, isValid, dirty, errors }) => (
           <Form className="ui form">
+            <MyTextInput name="displayName" placeholder="DisplayName" />
             <MyTextInput name="email" placeholder="Email Address" />
             <MyTextInput
               name="password"
@@ -48,7 +49,7 @@ export default function LoginForm() {
               fluid
               size="large"
               color="teal"
-              content="Login"
+              content="Register"
             />
             <Divider horizontal>Or</Divider>
             <SocialLogin />
@@ -56,5 +57,5 @@ export default function LoginForm() {
         )}
       </Formik>
     </ModalWrapper>
-  )
+  );
 }
