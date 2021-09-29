@@ -9,6 +9,7 @@ import EventDetailedPage from "../../features/events/eventDetailed/EventDetailed
 import EventForm from "../../features/events/eventForm/EventForm";
 import HomagePage from "../../features/home/HomePage";
 import NavBar from "../../features/nav/Navbar";
+import ProfilePage from "../../features/profiles/profilePage/ProfilePage";
 import Sandbox from "../../features/sandox/Sandbox";
 import ErrorComponent from "../common/errors/ErrorComponent";
 import ModalManager from "../common/modals/ModalManger";
@@ -41,7 +42,9 @@ export default function App() {
                 key={key}
               />
               <Route path='/error' component={ErrorComponent} />
+              <Route path='/profile/:id' component={ProfilePage} />
               <Route path='/account' component={AccountPage} />
+
             </Container>
           </>
         )}
