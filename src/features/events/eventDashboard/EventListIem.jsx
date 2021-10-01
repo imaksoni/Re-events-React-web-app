@@ -16,7 +16,7 @@ export default function EventListItem({event}){
                         <Item.Content>
                             <Item.Header content={event.title} />
                             <Item.Description>
-                                 {event.hostedBy}
+                                 Hosted by {event.hostedBy}
                             </Item.Description>
                             {event.isCancelled && (
                                 <Label style={{top: '-40px'}}
