@@ -1,32 +1,53 @@
-import { CREATE_EVENT, DELETE_EVENT, FETCH_EVENT, UPDATE_EVENT } from './eventConstants'
+import {
+  CLEAR_COMMENTS,
+  CREATE_EVENT,
+  DELETE_EVENT,
+  FETCH_EVENT,
+  LISTEN_TO_EVENT_CHAT,
+  UPDATE_EVENT,
+} from "./eventConstants";
 
-const initialState= {
-    events : [],
-}
+const initialState = {
+  events: [],
+  comments: [],
+};
 
-export default function eventReducers(state=initialState, {type, payload}){
-    switch(type){
-        case CREATE_EVENT:
-            return {
-                ...state,
-                events: [...state.events, payload]
-            }
-            case UPDATE_EVENT:
-            return {
-                ...state,
-                events: [...state.events.filter(evt => evt.id !== payload.id ), payload ]
-            }
-            case DELETE_EVENT:
-            return {
-                ...state,
-                events: [...state.events.filter(evt => evt.id !== payload ) ]
-            }
-            case FETCH_EVENT:
-                return{
-                    ...state,
-                    events: payload
-                }
-            default:
-                return state;
-    }
+export default function eventReducers(state = initialState, { type, payload }) {
+  switch (type) {
+    case CREATE_EVENT:
+      return {
+        ...state,
+        events: [...state.events, payload],
+      };
+    case UPDATE_EVENT:
+      return {
+        ...state,
+        events: [
+          ...state.events.filter((evt) => evt.id !== payload.id),
+          payload,
+        ],
+      };
+    case DELETE_EVENT:
+      return {
+        ...state,
+        events: [...state.events.filter((evt) => evt.id !== payload)],
+      };
+    case FETCH_EVENT:
+      return {
+        ...state,
+        events: payload,
+      };
+    case LISTEN_TO_EVENT_CHAT:
+      return {
+        ...state,
+        comments: payload,
+      };
+    case CLEAR_COMMENTS:
+      return {
+        ...state,
+        comments: [],
+      };
+    default:
+      return state;
+  }
 }
