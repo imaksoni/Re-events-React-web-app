@@ -193,8 +193,74 @@ export function getUserEventsQuery(activeTab, userUid) {
       return eventsRef.where("hostUid", "==", userUid).orderBy("date");
     default:
       return eventsRef
-      .where("attendeeIds", "array-contains", userUid)
-      .where("date", ">=", today)
-      .orderBy("date", "desc");
+        .where("attendeeIds", "array-contains", userUid)
+        .where("date", ">=", today)
+        .orderBy("date", "desc");
   }
+}
+
+export async function followUser(profile) {
+  const user = firebase.auth().currentUser;
+  const batch = db.batch();
+  try {
+    batch.set(
+      db
+        .collection("following")
+        .doc(user.uid)
+        .collection("userFollowings")
+        .doc(profile.id),
+      {
+        displayName: profile.displayName,
+        photoURL: profile.photoURL,
+        uid: profile.id,
+      }
+    );
+    
+    batch.update(db.collection("users").doc(user.uid), {
+      followingCount: firebase.firestore.FieldValue.increment(1),
+    });
+    
+    return await batch.commit();
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function unfollowUser(profile) {
+  const user = firebase.auth().currentUser;
+  const batch = db.batch();
+  try {
+    batch.delete(
+      db
+        .collection("following")
+        .doc(user.uid)
+        .collection("userFollowings")
+        .doc(profile.id)
+    );
+    
+    batch.update(db.collection("users").doc(user.uid), {
+      followingCount: firebase.firestore.FieldValue.increment(-1),
+    });
+    return await batch.commit();
+  } catch (error) {
+    throw error;
+  }
+}
+
+export function getFollowersCollection(profileId) {
+  return db.collection("following").doc(profileId).collection("userFollowers");
+}
+
+export function getFollowingsCollection(profileId) {
+  return db.collection("following").doc(profileId).collection("userFollowings");
+}
+
+export function getFollowingDoc(profileId) {
+  const userUid = firebase.auth().currentUser.uid;
+  return db
+    .collection("following")
+    .doc(userUid)
+    .collection("userFollowings")
+    .doc(profileId)
+    .get();
 }
