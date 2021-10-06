@@ -11,7 +11,7 @@ export default function EventFeedItem({ post }) {
         <>
           <Link to={`/profile/${post.userUid}`}>{post.displayName} </Link> has
           signed up to
-          <Link to={`events/${post.eventId}`}>{post.title}</Link>
+          <Link to={`events/${post.eventId}`}> {post.title}</Link>
         </>
       );
       break;
