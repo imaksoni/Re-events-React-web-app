@@ -14,6 +14,7 @@ import Sandbox from "../../features/sandox/Sandbox";
 import ErrorComponent from "../common/errors/ErrorComponent";
 import ModalManager from "../common/modals/ModalManger";
 import LoadingComponent from "./LoadingComponent";
+import PrivateRoute from "./PrivateRoute";
 
 export default function App() {
   const { key } = useLocation();
@@ -35,15 +36,15 @@ export default function App() {
               <Route exact path="/events" component={EventDashboard} />
               <Route exact path="/sandbox" component={Sandbox} />
               <Route exact path="/events/:id" component={EventDetailedPage} />
-              <Route
+              <PrivateRoute
                 exact
                 path={["/createEvent", "/manage/:id"]}
                 component={EventForm}
                 key={key}
               />
+              <PrivateRoute path='/profile/:id' component={ProfilePage} />
+              <PrivateRoute path='/account' component={AccountPage} />
               <Route path='/error' component={ErrorComponent} />
-              <Route path='/profile/:id' component={ProfilePage} />
-              <Route path='/account' component={AccountPage} />
 
             </Container>
           </>
